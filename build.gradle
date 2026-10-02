@@ -1,0 +1,12 @@
+plugins {
+    id 'io.quarkus' version "${quarkusPluginVersion}" apply false
+}
+
+allprojects {
+    group = 'com.legenkiy'
+    version = '0.0.1'
+
+    repositories {
+        mavenCentral()
+    }
+}

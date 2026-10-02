@@ -1,0 +1,4 @@
+rootProject.name = 'PET-bidvault-BE'
+include 'bv-app'
+include 'bv-shared'
+include 'bv-user'
