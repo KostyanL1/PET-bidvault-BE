@@ -1,0 +1,17 @@
+services:
+  postgres:
+    image: postgres:17-alpine
+    container_name: bv-postgres
+    ports:
+      - "1717:5432"
+
+    environment:
+      POSTGRES_DB: ${BV_POSTGRES_DB}
+      POSTGRES_USER: ${BV_POSTGRES_USERNAME}
+      POSTGRES_PASSWORD: ${BV_POSTGRES_PASSWORD}
+
+    volumes:
+      - bidcore-postgres-data:/var/lib/postgresql/data
+
+volumes:
+  bidcore-postgres-data:

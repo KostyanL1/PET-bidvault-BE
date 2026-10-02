@@ -1,0 +1,15 @@
+quarkus:
+  datasource:
+    db-kind: postgresql
+    username: ${BV_POSTGRES_USERNAME}
+    password: ${BV_POSTGRES_PASSWORD}
+    jdbc:
+      url: ${BV_POSTGRES_URL}
+
+  hibernate-orm:
+    database:
+      scripts:
+        generation: none
+
+  flyway:
+    migrate-at-start: true
