@@ -13,3 +13,20 @@ quarkus:
 
   flyway:
     migrate-at-start: true
+
+smallrye:
+  jwt:
+    sign:
+      key: ${JWT_PRIVATE_KEY}
+
+mp:
+  jwt:
+    verify:
+      publickey: ${JWT_PUBLIC_KEY}
+      issuer: bidvault
+
+jwt:
+  refresh:
+    expired: ${JWT_REFRESH_EXPIRED}
+  access:
+    expired: ${JWT_ACCESS_EXPIRED}

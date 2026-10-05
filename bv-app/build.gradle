@@ -6,7 +6,7 @@ plugins {
 dependencies {
     implementation enforcedPlatform("${quarkusPlatformGroupId}:${quarkusPlatformArtifactId}:${quarkusPlatformVersion}")
 
-    implementation project(':bv-shared')
+    implementation project(':bv-web')
     implementation project(':bv-user')
 
     implementation 'io.quarkus:quarkus-rest-jackson'
