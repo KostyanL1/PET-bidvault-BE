@@ -1,0 +1,15 @@
+plugins {
+    id 'java'
+}
+
+group = 'com.legenkiy'
+version = '0.0.1'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+}

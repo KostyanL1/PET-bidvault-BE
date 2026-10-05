@@ -9,8 +9,9 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/bv-app" />
-            <option value="$PROJECT_DIR$/bv-shared" />
+            <option value="$PROJECT_DIR$/bv-common" />
             <option value="$PROJECT_DIR$/bv-user" />
+            <option value="$PROJECT_DIR$/bv-web" />
           </set>
         </option>
         <option name="myGradleHome" value="" />
