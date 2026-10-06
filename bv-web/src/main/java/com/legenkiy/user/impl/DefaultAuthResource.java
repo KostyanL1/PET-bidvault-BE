@@ -1,6 +1,8 @@
 package com.legenkiy.user.impl;
 
 import com.legenkiy.jwt.model.AuthTokens;
+import com.legenkiy.security.CookieService;
+import com.legenkiy.security.CookieService.TokenCookies;
 import com.legenkiy.security.TokenFilter;
 import com.legenkiy.user.AuthResource;
 import com.legenkiy.user.AuthService;
@@ -26,8 +28,9 @@ import java.util.UUID;
 public class DefaultAuthResource implements AuthResource {
 
     private final SecurityIdentity identity;
-    private final AuthService service;
+    private final AuthService authService;
     private final UserMapper mapper;
+    private final CookieService cookieService;
 
     @Override
     public Response register(RegistrationRq rq) {
@@ -35,7 +38,7 @@ public class DefaultAuthResource implements AuthResource {
         validate(rq.username());
 
         UserRegistrationCommand command = mapper.toUserRegistration(rq);
-        User registered = service.register(command);
+        User registered = authService.register(command);
 
         log.debug("User registered: id={}, username={}", registered.getId(), registered.getUsername());
         return Response.ok().build();
@@ -47,21 +50,30 @@ public class DefaultAuthResource implements AuthResource {
         validate(rq.username());
 
         UserLoginCommand command = mapper.toUserLogin(rq);
-        AuthTokens tokens = service.login(command);
+        AuthTokens tokens = authService.login(command);
+
+        TokenCookies tokenCookies = cookieService.produceCookies(tokens);
 
         log.debug("User logged in: username={}", rq.username());
-        return Response.ok(tokens).build();
+        return Response
+                .ok(tokens)
+                .cookie(tokenCookies.refreshTokenCookie(), tokenCookies.accessTokenCookie())
+                .build();
     }
 
     @Override
     @TokenFilter
-    public Response logout(String authorization) {
+    public Response logout(String refreshToken) {
         UUID id = ResourcesUtils.extractUUID(this.identity);
         log.debug("User logout: id={}", id);
 
-        service.logout(authorization);
+        authService.logout(refreshToken);
+        TokenCookies destroyedCookies = cookieService.destroyCookies();
 
-        return Response.noContent().build();
+        return Response
+                .noContent()
+                .cookie(destroyedCookies.refreshTokenCookie(), destroyedCookies.accessTokenCookie())
+                .build();
     }
 
     private void validate(String username) {
