@@ -42,7 +42,7 @@ public class RefreshTokenEntityMapper {
     public RevokedRefreshTokenEntity toEntity(UUID jti) {
         return RevokedRefreshTokenEntity.builder()
                 .jti(jti)
-                .revoked_at(CommonGenerator.now())
+                .revokedAt(CommonGenerator.now())
                 .build();
     }
 

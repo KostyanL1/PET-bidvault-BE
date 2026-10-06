@@ -15,16 +15,29 @@ import com.legenkiy.user.model.auth.LoginRq;
 import com.legenkiy.user.model.auth.RegistrationRq;
 import com.legenkiy.user.utils.ResourcesUtils;
 import io.quarkus.security.identity.SecurityIdentity;
+import jakarta.annotation.security.PermitAll;
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.validation.Valid;
+import jakarta.ws.rs.Consumes;
+import jakarta.ws.rs.CookieParam;
+import jakarta.ws.rs.POST;
+import jakarta.ws.rs.Path;
+import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.UUID;
 
+import static com.legenkiy.common.BaseApi.BASE_PATH;
+
 @Slf4j
 @ApplicationScoped
 @RequiredArgsConstructor
+@Path(BASE_PATH + "/auth")
+@Consumes(MediaType.APPLICATION_JSON)
+@Produces(MediaType.APPLICATION_JSON)
 public class DefaultAuthResource implements AuthResource {
 
     private final SecurityIdentity identity;
@@ -33,7 +46,10 @@ public class DefaultAuthResource implements AuthResource {
     private final CookieService cookieService;
 
     @Override
-    public Response register(RegistrationRq rq) {
+    @POST
+    @Path(REGISTRATION_PATH)
+    @PermitAll
+    public Response register(@Valid RegistrationRq rq) {
         log.debug("User registration: username={}, email=%{}", rq.username(), rq.email());
         validate(rq.username());
 
@@ -45,7 +61,10 @@ public class DefaultAuthResource implements AuthResource {
     }
 
     @Override
-    public Response login(LoginRq rq) {
+    @POST
+    @Path(LOGIN_PATH)
+    @PermitAll
+    public Response login(@Valid LoginRq rq) {
         log.debug("User login: username={}", rq.username());
         validate(rq.username());
 
@@ -62,10 +81,13 @@ public class DefaultAuthResource implements AuthResource {
     }
 
     @Override
+    @POST
+    @Path(LOGOUT_PATH)
     @TokenFilter
-    public Response logout(String refreshToken) {
-        UUID id = ResourcesUtils.extractUUID(this.identity);
-        log.debug("User logout: id={}", id);
+    @PermitAll
+    public Response logout(@CookieParam("refresh_token") String refreshToken) {
+        String username = ResourcesUtils.extractUsername(this.identity);
+        log.debug("User logout: username={}", username);
 
         authService.logout(refreshToken);
         TokenCookies destroyedCookies = cookieService.destroyCookies();

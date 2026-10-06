@@ -8,9 +8,8 @@ import java.util.UUID;
 @UtilityClass
 public class ResourcesUtils {
 
-    public static UUID extractUUID(SecurityIdentity identity) {
-        String uuid = identity.getPrincipal().getName();
-        return UUID.fromString(uuid);
+    public static String extractUsername(SecurityIdentity identity) {
+        return identity.getPrincipal().getName();
     }
 
 }
