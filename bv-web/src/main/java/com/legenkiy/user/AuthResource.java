@@ -6,7 +6,7 @@ import com.legenkiy.user.model.auth.RegistrationRq;
 import jakarta.annotation.security.PermitAll;
 import jakarta.validation.Valid;
 import jakarta.ws.rs.Consumes;
-import jakarta.ws.rs.HeaderParam;
+import jakarta.ws.rs.CookieParam;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
@@ -37,6 +37,6 @@ public interface AuthResource extends BaseApi {
     @POST
     @Path(LOGOUT_PATH)
     @PermitAll
-    Response logout(@HeaderParam("Authorization") String authorization);
+    Response logout(@CookieParam("refresh_token") String refreshToken);
 
 }
