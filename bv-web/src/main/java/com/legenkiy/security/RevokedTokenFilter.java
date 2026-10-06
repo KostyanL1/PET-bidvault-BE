@@ -20,7 +20,7 @@ public class RevokedTokenFilter implements ContainerRequestFilter {
     private final JwtService jwtService;
 
     @Override
-    public void filter(ContainerRequestContext requestContext) throws IOException {
+    public void filter(ContainerRequestContext requestContext) {
         if (jwt.getTokenID() == null) {
             return;
         }

@@ -15,6 +15,7 @@ import com.legenkiy.user.exception.NotFoundException;
 import com.legenkiy.user.model.User;
 import io.smallrye.jwt.build.Jwt;
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -37,6 +38,7 @@ public class DefaultRefreshTokenService implements JwtService {
     private final DefaultRevokedRefreshTokenRepository revokedRefreshTokenRepository;
 
     @Override
+    @Transactional
     public AuthTokens issueTokens(String username, UUID userId) {
         User user = userService.getByUsername(username);
 
@@ -55,6 +57,7 @@ public class DefaultRefreshTokenService implements JwtService {
     }
 
     @Override
+    @Transactional
     public void revoke(String token) {
         RefreshToken refreshToken = getByToken(token);
 
@@ -82,7 +85,8 @@ public class DefaultRefreshTokenService implements JwtService {
     private String generateToken(boolean isRefreshToken, User user) {
         return Jwt
                 .issuer(TOKEN_ISSUER)
-                .upn(String.valueOf(user.getId()))
+                .subject(user.getId().toString())
+                .upn(String.valueOf(user.getUsername()))
                 .groups(String.valueOf(user.getRole()))
                 .issuedAt(CommonGenerator.now())
                 .expiresAt(getExpirationTime(isRefreshToken))

@@ -14,15 +14,32 @@ quarkus:
   flyway:
     migrate-at-start: true
 
+  http:
+    port: 8080
+
+  index-dependency:
+    bv-web:
+      group-id: com.legenkiy
+      artifact-id: bv-web
+    bv-user:
+      group-id: com.legenkiy
+      artifact-id: bv-user
+    bv-common:
+      group-id: com.legenkiy
+      artifact-id: bv-common
+
 smallrye:
   jwt:
     sign:
-      key: ${JWT_PRIVATE_KEY}
+      key:
+        location: jwt/privateKey.pem
+
 
 mp:
   jwt:
     verify:
-      publickey: ${JWT_PUBLIC_KEY}
+      publickey:
+        location: jwt/publicKey.pem
       issuer: bidvault
 
 jwt:

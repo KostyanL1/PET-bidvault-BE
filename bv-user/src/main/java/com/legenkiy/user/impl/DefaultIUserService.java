@@ -8,6 +8,7 @@ import com.legenkiy.user.model.User;
 import com.legenkiy.user.model.UserEntity;
 import com.legenkiy.user.repository.DefaultUserRepository;
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -22,6 +23,7 @@ public class DefaultIUserService implements UserService {
     private final UserEntityMapper mapper;
 
     @Override
+    @Transactional
     public User create(UserRegistrationCommand command) {
         UserEntity userEntity = mapper.toCreate(command);
         repository.persist(userEntity);

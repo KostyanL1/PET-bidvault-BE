@@ -22,10 +22,10 @@ public class RefreshTokenEntity {
     @Id
     @Column
     private UUID jti;
-    @Column
+    @Column(name = "user_id")
     private UUID userId;
     @Column
     private String token;
-    @Column
+    @Column(name = "created_at")
     private Instant createdAt;
 }

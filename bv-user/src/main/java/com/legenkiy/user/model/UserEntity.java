@@ -37,8 +37,8 @@ public class UserEntity {
     @Column
     @Enumerated(EnumType.STRING)
     private UserRole role;
-    @Column
+    @Column(name = "created_at")
     private Instant createdAt;
-    @Column
+    @Column(name = "updated_at")
     private Instant updatedAt;
 }

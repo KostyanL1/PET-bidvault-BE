@@ -22,6 +22,6 @@ public class RevokedRefreshTokenEntity {
     @Id
     @Column
     private UUID jti;
-    @Column
-    private Instant revoked_at;
+    @Column(name = "revoked_at")
+    private Instant revokedAt;
 }
