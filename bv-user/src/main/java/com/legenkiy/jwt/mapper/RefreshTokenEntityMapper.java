@@ -3,7 +3,6 @@ package com.legenkiy.jwt.mapper;
 import com.legenkiy.CommonGenerator;
 import com.legenkiy.jwt.model.RefreshToken;
 import com.legenkiy.jwt.model.RefreshTokenEntity;
-import com.legenkiy.jwt.model.RevokedRefreshToken;
 import com.legenkiy.jwt.model.RevokedRefreshTokenEntity;
 import jakarta.enterprise.context.ApplicationScoped;
 
