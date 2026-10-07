@@ -13,10 +13,16 @@ allprojects {
 
 subprojects {
     pluginManager.withPlugin('java') {
+        apply plugin: 'checkstyle'
+
         java {
             toolchain {
                 languageVersion = JavaLanguageVersion.of(21)
             }
+        }
+
+        checkstyle {
+            toolVersion = "${checkstyleVersion}"
         }
 
         test {

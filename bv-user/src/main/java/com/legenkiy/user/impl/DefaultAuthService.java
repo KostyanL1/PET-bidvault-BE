@@ -69,6 +69,4 @@ public class DefaultAuthService implements AuthService {
             throw new AuthException(message);
         }
     }
-
-
 }
