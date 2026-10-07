@@ -13,11 +13,17 @@ import com.legenkiy.jwt.repository.DefaultRevokedRefreshTokenRepository;
 import com.legenkiy.user.UserService;
 import com.legenkiy.user.exception.NotFoundException;
 import com.legenkiy.user.model.User;
+import io.quarkus.security.UnauthorizedException;
+import io.smallrye.jwt.auth.principal.JWTParser;
 import io.smallrye.jwt.build.Jwt;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.transaction.Transactional;
+import jakarta.xml.bind.ValidationException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.eclipse.microprofile.jwt.Claims;
+import org.eclipse.microprofile.jwt.JsonWebToken;
+import org.jose4j.lang.StringUtil;
 
 import java.time.Duration;
 import java.time.Instant;
@@ -36,24 +42,56 @@ public class DefaultRefreshTokenService implements JwtService {
     private final RefreshTokenEntityMapper mapper;
     private final DefaultRefreshTokenRepository refreshTokenRepository;
     private final DefaultRevokedRefreshTokenRepository revokedRefreshTokenRepository;
+    private final JWTParser parser;
 
     @Override
     @Transactional
     public AuthTokens issueTokens(String username, UUID userId) {
         User user = userService.getByUsername(username);
 
-        String refreshToken = generateToken(true, user);
-        String accessToken = generateToken(false, user);
+        UUID tokensJti = CommonGenerator.uuid();
+        Instant refreshTokenExpiredAt = getExpirationTime(true);
+        String refreshToken = generateToken(user, tokensJti, refreshTokenExpiredAt);
+        String accessToken = generateToken(user, tokensJti, getExpirationTime(false));
 
-        RefreshToken tokenForSave = mapper.toCreateDto(refreshToken, userId);
+        RefreshToken tokenForSave = mapper.toCreateDto(refreshToken, userId, tokensJti, refreshTokenExpiredAt);
         RefreshToken savedToken = create(tokenForSave);
 
         return new AuthTokens(accessToken, savedToken.getToken());
     }
 
     @Override
+    public String validateTokenAndGetUsername(String token) {
+        try {
+            if (token == null || token.isBlank()) {
+                log.info("Refresh token is missing");
+                throw new UnauthorizedException("Refresh token is missing");
+            }
+
+            JsonWebToken jwt = parser.parse(token);
+
+            if (!isTokenNonExpired(UUID.fromString(jwt.getTokenID()))) {
+                throw new UnauthorizedException("Token expired");
+            }
+            if (existRevokedTokenByJti(UUID.fromString(jwt.getTokenID()))) {
+                throw new UnauthorizedException("Token revoked");
+            }
+
+            return jwt.getName();
+        } catch (Exception e) {
+            throw new UnauthorizedException("Token validation failed: ", e.getCause());
+        }
+    }
+
+    @Override
     public boolean existRevokedTokenByJti(UUID jti) {
         return revokedRefreshTokenRepository.existsByJti(jti);
+    }
+
+    @Override
+    public boolean isTokenNonExpired(UUID jti) {
+        RefreshTokenEntity refreshToken = refreshTokenRepository.findById(jti);
+        return refreshToken.getExpiredAt().isAfter(Instant.now());
     }
 
     @Override
@@ -82,14 +120,15 @@ public class DefaultRefreshTokenService implements JwtService {
         return findByToken(token).orElseThrow(() -> new NotFoundException("Token not found"));
     }
 
-    private String generateToken(boolean isRefreshToken, User user) {
+    private String generateToken(User user, UUID jti, Instant expirationTime) {
         return Jwt
                 .issuer(TOKEN_ISSUER)
                 .subject(user.getId().toString())
                 .upn(String.valueOf(user.getUsername()))
                 .groups(String.valueOf(user.getRole()))
+                .claim(Claims.jti, jti.toString())
                 .issuedAt(CommonGenerator.now())
-                .expiresAt(getExpirationTime(isRefreshToken))
+                .expiresAt(expirationTime)
                 .sign();
     }
 

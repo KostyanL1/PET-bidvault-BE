@@ -6,17 +6,19 @@ import com.legenkiy.jwt.model.RefreshTokenEntity;
 import com.legenkiy.jwt.model.RevokedRefreshTokenEntity;
 import jakarta.enterprise.context.ApplicationScoped;
 
+import java.time.Instant;
 import java.util.UUID;
 
 @ApplicationScoped
 public class RefreshTokenEntityMapper {
 
-    public RefreshToken toCreateDto(String token, UUID userId) {
+    public RefreshToken toCreateDto(String token, UUID userId, UUID jti, Instant expiredAt) {
         return RefreshToken.builder()
-                .jti(CommonGenerator.uuid())
+                .jti(jti)
                 .userId(userId)
                 .token(token)
                 .createdAt(CommonGenerator.now())
+                .expiredAt(expiredAt)
                 .build();
     }
 
@@ -26,6 +28,7 @@ public class RefreshTokenEntityMapper {
                 .userId(token.getUserId())
                 .createdAt(token.getCreatedAt())
                 .token(token.getToken())
+                .expiredAt(token.getExpiredAt())
                 .build();
     }
 
@@ -35,6 +38,7 @@ public class RefreshTokenEntityMapper {
                 .userId(token.getUserId())
                 .createdAt(token.getCreatedAt())
                 .token(token.getToken())
+                .expiredAt(token.getExpiredAt())
                 .build();
     }
 

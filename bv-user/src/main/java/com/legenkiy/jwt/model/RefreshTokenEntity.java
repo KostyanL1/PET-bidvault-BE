@@ -28,4 +28,6 @@ public class RefreshTokenEntity {
     private String token;
     @Column(name = "created_at")
     private Instant createdAt;
+    @Column(name = "expired_at")
+    private Instant expiredAt;
 }
