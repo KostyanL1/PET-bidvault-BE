@@ -10,6 +10,7 @@
     <module name="NewlineAtEndOfFile"/>
     <module name="TreeWalker">
         <module name="AvoidStarImport"/>
+        <module name="UnusedImports"/>
         <module name="EmptyLineSeparator">
             <property name="tokens" value="METHOD_DEF,CTOR_DEF"/>
             <property name="allowMultipleEmptyLines" value="false"/>

@@ -6,11 +6,12 @@ import jakarta.ws.rs.container.ContainerRequestContext;
 import jakarta.ws.rs.container.ContainerRequestFilter;
 import jakarta.ws.rs.ext.Provider;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.eclipse.microprofile.jwt.JsonWebToken;
 
-import java.io.IOException;
 import java.util.UUID;
 
+@Slf4j
 @Provider
 @TokenFilter
 @RequiredArgsConstructor
@@ -26,7 +27,11 @@ public class RevokedTokenFilter implements ContainerRequestFilter {
         }
 
         if (jwtService.existRevokedTokenByJti(UUID.fromString(jwt.getTokenID()))) {
-            throw new NotAuthorizedException("Token revoked");
+            throw new NotAuthorizedException("Invalid revoked");
+        }
+
+        if (jwtService.isTokenNonExpired(UUID.fromString(jwt.getTokenID()))) {
+            throw new NotAuthorizedException("Token expired");
         }
     }
 }

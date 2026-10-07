@@ -5,7 +5,17 @@ info:
 
 http:
   method: POST
-  url: ""
+  url: "{{host}}/api/auth/registration"
+  body:
+    type: json
+    data: |-
+      {
+        "name": "Jhon",
+        "surname": "Wick",
+        "username": "LEGENK1Y",
+        "email": "jhon_wick05@gmail.com",
+        "password": "admin123"
+      }
   auth: inherit
 
 settings:

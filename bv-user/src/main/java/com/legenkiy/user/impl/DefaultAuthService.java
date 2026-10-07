@@ -10,6 +10,7 @@ import com.legenkiy.user.exception.AuthException;
 import com.legenkiy.user.model.User;
 import io.quarkus.elytron.security.common.BcryptUtil;
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.xml.bind.ValidationException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -33,6 +34,16 @@ public class DefaultAuthService implements AuthService {
     public AuthTokens login(UserLoginCommand command) {
         validate(command);
         User user = userService.getByUsername(command.username());
+        return jwtService.issueTokens(user.getUsername(), user.getId());
+    }
+
+    @Override
+    public AuthTokens refresh(String token)  {
+        String username = jwtService.validateTokenAndGetUsername(token);
+
+        User user = userService.getByUsername(username);
+
+        jwtService.revoke(token);
         return jwtService.issueTokens(user.getUsername(), user.getId());
     }
 

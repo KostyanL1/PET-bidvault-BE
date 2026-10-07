@@ -1,11 +1,14 @@
 info:
   name: Logout
   type: http
-  seq: 3
+  seq: 4
 
 http:
   method: POST
-  url: "{{host}}/api/auth/login"
+  url: "{{host}}/api/auth/logout"
+  headers:
+    - name: Authorization
+      value: Bearer {{accessToken}}
   body:
     type: json
     data: |-

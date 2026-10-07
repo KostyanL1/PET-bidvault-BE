@@ -14,6 +14,7 @@ import com.legenkiy.user.mapper.UserMapper;
 import com.legenkiy.user.model.auth.LoginRq;
 import com.legenkiy.user.model.auth.RegistrationRq;
 import com.legenkiy.user.utils.ResourcesUtils;
+import io.quarkus.security.Authenticated;
 import io.quarkus.security.identity.SecurityIdentity;
 import jakarta.annotation.security.PermitAll;
 import jakarta.enterprise.context.ApplicationScoped;
@@ -25,10 +26,9 @@ import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import jakarta.xml.bind.ValidationException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-
-import java.util.UUID;
 
 import static com.legenkiy.common.BaseApi.BASE_PATH;
 
@@ -82,9 +82,23 @@ public class DefaultAuthResource implements AuthResource {
 
     @Override
     @POST
+    @Path(REFRESH_PATH)
+    @PermitAll
+    public Response refresh(@CookieParam("refresh_token") String refreshToken) {
+        AuthTokens authTokens = authService.refresh(refreshToken);
+        TokenCookies tokenCookies = cookieService.produceCookies(authTokens);
+
+        return Response
+                .ok(authTokens)
+                .cookie(tokenCookies.accessTokenCookie(), tokenCookies.refreshTokenCookie())
+                .build();
+    }
+
+    @Override
+    @POST
     @Path(LOGOUT_PATH)
     @TokenFilter
-    @PermitAll
+    @Authenticated
     public Response logout(@CookieParam("refresh_token") String refreshToken) {
         String username = ResourcesUtils.extractUsername(this.identity);
         log.debug("User logout: username={}", username);
