@@ -1,7 +1,6 @@
 package com.legenkiy.jwt;
 
 import com.legenkiy.jwt.model.AuthTokens;
-import jakarta.xml.bind.ValidationException;
 
 import java.util.UUID;
 
