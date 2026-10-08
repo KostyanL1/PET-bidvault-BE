@@ -10,6 +10,7 @@ repositories {
 }
 
 dependencies {
+    compileOnly 'jakarta.enterprise:jakarta.enterprise.cdi-api'
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
 }
