@@ -7,8 +7,9 @@ import com.legenkiy.user.UserService;
 import com.legenkiy.user.dto.UserLoginCommand;
 import com.legenkiy.user.dto.UserRegistrationCommand;
 import com.legenkiy.user.exception.AuthException;
+import com.legenkiy.user.exception.NotFoundException;
 import com.legenkiy.user.model.User;
-import io.quarkus.elytron.security.common.BcryptUtil;
+import com.legenkiy.user.security.PasswordHasher;
 import jakarta.enterprise.context.ApplicationScoped;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,6 +23,7 @@ public class DefaultAuthService implements AuthService {
 
     private final UserService userService;
     private final JwtService jwtService;
+    private final PasswordHasher passwordHasher;
 
     @Override
     public User register(UserRegistrationCommand command) {
@@ -71,12 +73,12 @@ public class DefaultAuthService implements AuthService {
         if (user.isEmpty()) {
             String message = "User with such username not found: username=%s".formatted(command.username());
             log.debug(message);
-            throw new AuthException(message);
+            throw new NotFoundException(message);
         }
-        if (!BcryptUtil.matches(command.password(), user.get().getPassword())) {
+        if (!passwordHasher.matches(command.password(), user.get().getPassword())) {
             String message = "Password incorrect for username=%s".formatted(command.username());
             log.debug(message);
-            throw new AuthException(message);
+            throw new IllegalArgumentException(message);
         }
     }
 }

@@ -1,5 +1,5 @@
 plugins {
-    id 'java'
+    id 'java-library'
     id 'io.quarkus'
 }
 
@@ -9,6 +9,11 @@ dependencies {
     implementation project(':bv-web')
     implementation project(':bv-user')
     implementation project(':bv-common')
+
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+    testCompileOnly 'org.projectlombok:lombok'
+    testAnnotationProcessor 'org.projectlombok:lombok'
 
     implementation 'io.quarkus:quarkus-rest-jackson'
     implementation 'io.quarkus:quarkus-config-yaml'
@@ -23,4 +28,12 @@ dependencies {
 
     testImplementation 'io.quarkus:quarkus-junit5'
     testImplementation 'io.rest-assured:rest-assured'
+
+    testImplementation 'io.quarkus:quarkus-junit5-mockito'
+    testImplementation 'org.testcontainers:junit-jupiter'
+    testImplementation 'org.testcontainers:postgresql'
+    testImplementation 'com.github.database-rider:rider-junit5'
+    testImplementation 'org.assertj:assertj-core'
+    testImplementation 'org.skyscreamer:jsonassert'
+
 }

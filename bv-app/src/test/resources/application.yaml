@@ -1,0 +1,5 @@
+jwt:
+  refresh:
+    expired: PT168H
+  access:
+    expired: PT60S

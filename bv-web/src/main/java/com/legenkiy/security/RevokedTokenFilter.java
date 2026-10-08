@@ -30,7 +30,7 @@ public class RevokedTokenFilter implements ContainerRequestFilter {
             throw new NotAuthorizedException("Invalid revoked");
         }
 
-        if (jwtService.isTokenNonExpired(UUID.fromString(jwt.getTokenID()))) {
+        if (!jwtService.isTokenNonExpired(UUID.fromString(jwt.getTokenID()))) {
             throw new NotAuthorizedException("Token expired");
         }
     }

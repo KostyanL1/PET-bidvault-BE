@@ -40,13 +40,14 @@ public class DefaultRefreshTokenService implements JwtService {
     private final DefaultRefreshTokenRepository refreshTokenRepository;
     private final DefaultRevokedRefreshTokenRepository revokedRefreshTokenRepository;
     private final JWTParser parser;
+    private final CommonGenerator commonGenerator;
 
     @Override
     @Transactional
     public AuthTokens issueTokens(String username, UUID userId) {
         User user = userService.getByUsername(username);
 
-        UUID tokensJti = CommonGenerator.uuid();
+        UUID tokensJti = commonGenerator.uuid();
         Instant refreshTokenExpiredAt = getExpirationTime(true);
         String refreshToken = generateToken(user, tokensJti, refreshTokenExpiredAt);
         String accessToken = generateToken(user, tokensJti, getExpirationTime(false));
@@ -88,7 +89,7 @@ public class DefaultRefreshTokenService implements JwtService {
     @Override
     public boolean isTokenNonExpired(UUID jti) {
         RefreshTokenEntity refreshToken = refreshTokenRepository.findById(jti);
-        return refreshToken.getExpiredAt().isAfter(Instant.now());
+        return refreshToken.getExpiredAt().isAfter(commonGenerator.now());
     }
 
     @Override
@@ -124,13 +125,13 @@ public class DefaultRefreshTokenService implements JwtService {
                 .upn(String.valueOf(user.getUsername()))
                 .groups(String.valueOf(user.getRole()))
                 .claim(Claims.jti, jti.toString())
-                .issuedAt(CommonGenerator.now())
+                .issuedAt(commonGenerator.now())
                 .expiresAt(expirationTime)
                 .sign();
     }
 
     private Instant getExpirationTime(boolean isRefreshToken) {
-        Instant now = CommonGenerator.now();
+        Instant now = commonGenerator.now();
         Duration expirationTime = isRefreshToken ? properties.refresh().expired() : properties.access().expired();
         return now.plus(expirationTime);
     }
