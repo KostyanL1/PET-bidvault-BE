@@ -27,6 +27,7 @@ subprojects {
 
         test {
             useJUnitPlatform()
+            systemProperty 'user.timezone', 'UTC'
         }
 
         dependencies {
@@ -41,6 +42,11 @@ subprojects {
 
                 testImplementation "org.junit.jupiter:junit-jupiter:${junitVersion}"
                 testRuntimeOnly "org.junit.platform:junit-platform-launcher:${junitPlatformVersion}"
+                testImplementation "org.testcontainers:junit-jupiter:${testcontainersVersion}"
+                testImplementation "org.testcontainers:postgresql:${testcontainersVersion}"
+                testImplementation "com.github.database-rider:rider-junit5:${databaseRiderVersion}:jakarta"
+                testImplementation "org.assertj:assertj-core:${assertjVersion}"
+                testImplementation "org.skyscreamer:jsonassert:${jsonAssertVersion}"
             }
         }
     }

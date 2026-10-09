@@ -5,23 +5,28 @@ import com.legenkiy.user.dto.UserRegistrationCommand;
 import com.legenkiy.user.model.User;
 import com.legenkiy.user.model.UserEntity;
 import com.legenkiy.user.model.UserRole;
-import io.quarkus.elytron.security.common.BcryptUtil;
+import com.legenkiy.user.security.PasswordHasher;
 import jakarta.enterprise.context.ApplicationScoped;
+import lombok.RequiredArgsConstructor;
 
 import java.time.Instant;
 
 @ApplicationScoped
+@RequiredArgsConstructor
 public class UserEntityMapper {
 
+    private final CommonGenerator commonGenerator;
+    private final PasswordHasher passwordHasher;
+
     public UserEntity toCreate(UserRegistrationCommand command) {
-        Instant time = CommonGenerator.now();
+        Instant time = commonGenerator.now();
         return UserEntity.builder()
-                .id(CommonGenerator.uuid())
+                .id(commonGenerator.uuid())
                 .name(command.name())
                 .surname(command.surname())
                 .username(command.username())
                 .email(command.email())
-                .password(BcryptUtil.bcryptHash(command.password()))
+                .password(passwordHasher.hash(command.password()))
                 .role(UserRole.USER)
                 .createdAt(time)
                 .updatedAt(time)

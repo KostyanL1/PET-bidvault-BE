@@ -1,11 +1,11 @@
 package com.legenkiy;
 
-import lombok.experimental.UtilityClass;
+import jakarta.enterprise.context.ApplicationScoped;
 
 import java.time.Instant;
 import java.util.UUID;
 
-@UtilityClass
+@ApplicationScoped
 public class CommonGenerator {
 
     public UUID uuid() {
