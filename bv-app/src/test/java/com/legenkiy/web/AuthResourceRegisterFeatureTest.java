@@ -11,8 +11,12 @@ import io.restassured.http.ContentType;
 import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.Test;
 
-import static com.legenkiy.AbstractIntegrationTest.Fixtures.*;
-import static com.legenkiy.web.AuthResourceRegisterFeatureTest.Fixtures.*;
+import static com.legenkiy.AbstractIntegrationTest.Fixtures.FIRST_USER_ID;
+import static com.legenkiy.AbstractIntegrationTest.Fixtures.FIRST_USER_CREATED_AT;
+import static com.legenkiy.AbstractIntegrationTest.Fixtures.FIRST_USER_PASSWORD;
+import static com.legenkiy.AbstractIntegrationTest.Fixtures.FIRST_USER_PASSWORD_HASH;
+import static com.legenkiy.web.AuthResourceRegisterFeatureTest.Fixtures.BASE_API_PATH;
+import static com.legenkiy.web.AuthResourceRegisterFeatureTest.Fixtures.CORRECT_USER_DATA_PATH;
 import static io.restassured.RestAssured.given;
 import static org.mockito.Mockito.when;
 
@@ -61,7 +65,7 @@ public class AuthResourceRegisterFeatureTest extends AbstractIntegrationTest {
 
         given()
                 .contentType(ContentType.JSON)
-                .body(readFile(INCORRECT_USER_DATA_PATH))
+                .body(readFile(Fixtures.INCORRECT_USER_DATA_PATH))
                 .post(BASE_API_PATH)
                 .then()
                 .statusCode(HttpStatus.SC_BAD_REQUEST);
