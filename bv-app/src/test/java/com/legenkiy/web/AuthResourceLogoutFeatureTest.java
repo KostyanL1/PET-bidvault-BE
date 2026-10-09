@@ -18,9 +18,10 @@ import org.junit.jupiter.api.Test;
 
 import java.time.Instant;
 
-import static com.legenkiy.web.AuthResourceLogoutFeatureTest.Fixtures.*;
+import static com.legenkiy.AbstractIntegrationTest.Fixtures.FIRST_TOKEN_JTI;
+import static com.legenkiy.AbstractIntegrationTest.Fixtures.FIRST_USER_USERNAME;
+import static com.legenkiy.AbstractIntegrationTest.Fixtures.FIRST_USER_ID;
 import static io.restassured.RestAssured.given;
-import static com.legenkiy.AbstractIntegrationTest.Fixtures.*;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -47,7 +48,7 @@ public class AuthResourceLogoutFeatureTest extends AbstractIntegrationTest {
 
         Instant tokenIssuedAt = Instant.now();
 
-        when(generator.uuid()).thenReturn(TOKEN_JTI);
+        when(generator.uuid()).thenReturn(FIRST_TOKEN_JTI);
         when(generator.now()).thenReturn(tokenIssuedAt);
 
         AuthTokens tokens = jwtService.issueTokens(FIRST_USER_USERNAME, FIRST_USER_ID);
@@ -56,7 +57,7 @@ public class AuthResourceLogoutFeatureTest extends AbstractIntegrationTest {
                 .contentType(ContentType.JSON)
                 .header("Authorization", "Bearer " + tokens.accessToken())
                 .cookie("refresh_token", tokens.refreshToken())
-                .post(BASE_LOGOUT_PATH)
+                .post(Fixtures.BASE_LOGOUT_PATH)
                 .then()
                 .statusCode(HttpStatus.SC_NO_CONTENT);
 
@@ -68,7 +69,7 @@ public class AuthResourceLogoutFeatureTest extends AbstractIntegrationTest {
     void givenDataWithoutAuthorizationToken_logout_shouldReturnUnauthorized() {
         given()
                 .contentType(ContentType.JSON)
-                .post(BASE_LOGOUT_PATH)
+                .post(Fixtures.BASE_LOGOUT_PATH)
                 .then()
                 .statusCode(HttpStatus.SC_UNAUTHORIZED);
     }

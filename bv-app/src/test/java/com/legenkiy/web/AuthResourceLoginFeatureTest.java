@@ -13,10 +13,14 @@ import org.skyscreamer.jsonassert.JSONAssert;
 import org.skyscreamer.jsonassert.JSONCompareMode;
 import lombok.SneakyThrows;
 
+import static com.legenkiy.AbstractIntegrationTest.Fixtures.FIRST_USER_ID;
+import static com.legenkiy.AbstractIntegrationTest.Fixtures.FIRST_USER_USERNAME;
+import static com.legenkiy.web.AuthResourceLoginFeatureTest.Fixtures.BASE_API;
+import static com.legenkiy.web.AuthResourceLoginFeatureTest.Fixtures.MALFORMED_LOGIN_DATA_PATH;
+import static com.legenkiy.web.AuthResourceLoginFeatureTest.Fixtures.INCORRECT_LOGIN_DATA_PATH;
+import static com.legenkiy.web.AuthResourceLoginFeatureTest.Fixtures.INCORRECT_PASSWORD_PATH;
 import static io.restassured.RestAssured.given;
 
-import static com.legenkiy.AbstractIntegrationTest.Fixtures.*;
-import static com.legenkiy.web.AuthResourceLoginFeatureTest.Fixtures.*;
 import static org.mockito.Mockito.when;
 
 @QuarkusTest
@@ -29,11 +33,11 @@ public class AuthResourceLoginFeatureTest extends AbstractIntegrationTest {
     @SneakyThrows
     @DataSet("web/login/given/table_with_first_user.yml")
     void givenCorrectData_login_shouldReturnJwtTokens() {
-        when(jwtService.issueTokens(FIRST_USER_USERNAME, FIRST_USER_ID)).thenReturn(buildAuthTokens());
+        when(jwtService.issueTokens(FIRST_USER_USERNAME, FIRST_USER_ID)).thenReturn(Fixtures.buildAuthTokens());
 
         String response = given()
                 .contentType(ContentType.JSON)
-                .body(readFile(CORRECT_LOGIN_DATA_PATH))
+                .body(readFile(Fixtures.CORRECT_LOGIN_DATA_PATH))
                 .post(BASE_API)
                 .then()
                 .statusCode(HttpStatus.SC_OK)
@@ -42,7 +46,7 @@ public class AuthResourceLoginFeatureTest extends AbstractIntegrationTest {
                 .body()
                 .asString();
 
-        JSONAssert.assertEquals(buildTokenExpected(), response, JSONCompareMode.LENIENT);
+        JSONAssert.assertEquals(Fixtures.buildTokenExpected(), response, JSONCompareMode.LENIENT);
     }
 
     @Test

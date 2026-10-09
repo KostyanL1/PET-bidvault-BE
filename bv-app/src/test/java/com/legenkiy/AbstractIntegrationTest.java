@@ -53,7 +53,8 @@ public abstract class AbstractIntegrationTest {
         public static Instant FIRST_USER_CREATED_AT = Instant.parse("2026-10-07T20:33:42+00:00");
         public static Instant FIRST_USER_UPDATED_AT = Instant.parse("2026-10-07T20:33:42+00:00");
 
-        public static UUID TOKEN_JTI = UUID.fromString("11111111-1111-1111-1111-111111111222");
+        public static UUID FIRST_TOKEN_JTI = UUID.fromString("11111111-1111-1111-1111-111111111222");
+        public static UUID SECOND_TOKEN_JTI = UUID.fromString("11111111-1111-1111-1111-111111111333");
 
     }
 
