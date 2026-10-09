@@ -2,7 +2,7 @@ package com.legenkiy.user.impl;
 
 import com.legenkiy.user.UserService;
 import com.legenkiy.user.dto.UserRegistrationCommand;
-import com.legenkiy.user.exception.NotFoundException;
+import com.legenkiy.exception.NotFoundException;
 import com.legenkiy.user.mapper.UserEntityMapper;
 import com.legenkiy.user.model.User;
 import com.legenkiy.user.model.UserEntity;

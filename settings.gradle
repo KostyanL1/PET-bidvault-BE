@@ -3,3 +3,5 @@ include 'bv-app'
 include 'bv-web'
 include 'bv-user'
 include 'bv-common'
+
+include 'bv-auction'

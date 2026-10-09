@@ -1,6 +1,6 @@
 package com.legenkiy.user.exception.mapper;
 
-import com.legenkiy.user.exception.NotFoundException;
+import com.legenkiy.exception.NotFoundException;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.ext.Provider;
 
