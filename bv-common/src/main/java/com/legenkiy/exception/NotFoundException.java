@@ -1,4 +1,4 @@
-package com.legenkiy.user.exception;
+package com.legenkiy.exception;
 
 public class NotFoundException extends RuntimeException {
     public NotFoundException(String message) {

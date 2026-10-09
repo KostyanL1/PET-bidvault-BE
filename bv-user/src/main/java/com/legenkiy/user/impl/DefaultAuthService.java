@@ -7,7 +7,7 @@ import com.legenkiy.user.UserService;
 import com.legenkiy.user.dto.UserLoginCommand;
 import com.legenkiy.user.dto.UserRegistrationCommand;
 import com.legenkiy.user.exception.AuthException;
-import com.legenkiy.user.exception.NotFoundException;
+import com.legenkiy.exception.NotFoundException;
 import com.legenkiy.user.model.User;
 import com.legenkiy.user.security.PasswordHasher;
 import jakarta.enterprise.context.ApplicationScoped;

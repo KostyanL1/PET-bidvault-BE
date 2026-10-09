@@ -31,11 +31,15 @@ public class AuctionEntity {
     @Column(name = "start_price")
     private double startPrice;
     @Column(name = "finish_price")
-    private double finishPrice;
+    private Double finishPrice;
     @Column(name = "owner_id")
     private UUID ownerId;
     @Column(name = "created_at")
     private Instant createdAt;
+    @Column(name = "updated_at")
+    private Instant updatedAt;
+    @Column(name = "started_at")
+    private Instant startedAt;
     @Column(name = "finished_at")
     private Instant finishedAt;
     @Column

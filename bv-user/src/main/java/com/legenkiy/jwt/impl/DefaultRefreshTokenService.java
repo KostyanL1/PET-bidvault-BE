@@ -11,7 +11,7 @@ import com.legenkiy.jwt.model.RevokedRefreshTokenEntity;
 import com.legenkiy.jwt.repository.DefaultRefreshTokenRepository;
 import com.legenkiy.jwt.repository.DefaultRevokedRefreshTokenRepository;
 import com.legenkiy.user.UserService;
-import com.legenkiy.user.exception.NotFoundException;
+import com.legenkiy.exception.NotFoundException;
 import com.legenkiy.user.model.User;
 import io.quarkus.security.UnauthorizedException;
 import io.smallrye.jwt.auth.principal.JWTParser;

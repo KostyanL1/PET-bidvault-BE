@@ -18,9 +18,11 @@ public class Auction {
     private String description;
     private AuctionStatus status;
     private double startPrice;
-    private double finishPrice;
+    private Double finishPrice;
     private UUID ownerId;
     private Instant createdAt;
+    private Instant updatedAt;
+    private Instant startedAt;
     private Instant finishedAt;
     private long duration;
     private int countOfParticipants;
