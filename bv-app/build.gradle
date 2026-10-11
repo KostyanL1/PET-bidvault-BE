@@ -9,6 +9,8 @@ dependencies {
     implementation project(':bv-web')
     implementation project(':bv-user')
     implementation project(':bv-common')
+    implementation project(':bv-auction')
+    implementation project(':bv-room')
 
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'

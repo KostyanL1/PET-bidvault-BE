@@ -9,6 +9,7 @@ import com.legenkiy.model.Auction;
 import com.legenkiy.model.AuctionStatus;
 import com.legenkiy.repository.DefaultAuctionRepository;
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -24,6 +25,7 @@ public class DefaultAuctionService implements AuctionService {
     private final DefaultAuctionRepository repository;
 
     @Override
+    @Transactional
     public Auction create(CreateAuctionCommand command) {
         Auction auction = mapper.toCreate(command);
         repository.persist(mapper.toEntity(auction));
@@ -31,6 +33,7 @@ public class DefaultAuctionService implements AuctionService {
     }
 
     @Override
+    @Transactional
     public Auction markAuctionWithStatus(UUID auctionId, AuctionStatus status) {
         Auction auction = getById(auctionId);
         mapper.markWithStatus(auction, status);
@@ -39,6 +42,7 @@ public class DefaultAuctionService implements AuctionService {
     }
 
     @Override
+    @Transactional
     public Auction update(UpdateAuctionCommand command) {
         Auction auction = getById(command.id());
         mapper.updateAuction(auction, command);
@@ -47,11 +51,13 @@ public class DefaultAuctionService implements AuctionService {
     }
 
     @Override
+    @Transactional
     public int increaseCountOfParticipants(UUID auctionId) {
         Auction auction = getById(auctionId);
         int currentParticipants = auction.getCountOfParticipants();
         currentParticipants++;
         auction.setCountOfParticipants(currentParticipants);
+        repository.persist(mapper.toEntity(auction));
         return currentParticipants;
     }
 
@@ -67,6 +73,7 @@ public class DefaultAuctionService implements AuctionService {
     }
 
     @Override
+    @Transactional
     public void deleteById(UUID auctionId) {
         Auction auction = getById(auctionId);
         repository.delete(mapper.toEntity(auction));
