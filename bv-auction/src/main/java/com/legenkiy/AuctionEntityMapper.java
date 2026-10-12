@@ -53,6 +53,7 @@ public class AuctionEntityMapper {
     }
 
     public Auction toCreate(CreateAuctionCommand command) {
+        Instant time = commonGenerator.now();
         return Auction.builder()
                 .id(commonGenerator.uuid())
                 .title(command.title())
@@ -60,7 +61,8 @@ public class AuctionEntityMapper {
                 .status(AuctionStatus.CREATED)
                 .startPrice(command.startPrice())
                 .ownerId(command.ownerId())
-                .createdAt(commonGenerator.now())
+                .createdAt(time)
+                .updatedAt(time)
                 .duration(command.duration())
                 .countOfParticipants(0)
                 .build();

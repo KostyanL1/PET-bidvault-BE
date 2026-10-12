@@ -1,5 +1,6 @@
 package com.legenkiy;
 
+import com.legenkiy.dto.AuctionCreatedRs;
 import com.legenkiy.dto.CreateAuctionCommand;
 import com.legenkiy.dto.UpdateAuctionCommand;
 import com.legenkiy.model.Auction;
@@ -10,7 +11,7 @@ import java.util.UUID;
 
 public interface AuctionService {
 
-    Auction create(CreateAuctionCommand command);
+    AuctionCreatedRs create(CreateAuctionCommand command);
 
     Auction markAuctionWithStatus(UUID auctionId, AuctionStatus status);
 

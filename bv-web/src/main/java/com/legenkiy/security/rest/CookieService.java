@@ -1,4 +1,4 @@
-package com.legenkiy.security;
+package com.legenkiy.security.rest;
 
 import com.legenkiy.jwt.model.AuthTokens;
 import jakarta.enterprise.context.ApplicationScoped;
