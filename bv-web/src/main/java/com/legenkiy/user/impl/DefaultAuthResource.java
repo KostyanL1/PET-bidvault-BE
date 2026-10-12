@@ -1,9 +1,9 @@
 package com.legenkiy.user.impl;
 
 import com.legenkiy.jwt.model.AuthTokens;
-import com.legenkiy.security.CookieService;
-import com.legenkiy.security.CookieService.TokenCookies;
-import com.legenkiy.security.TokenFilter;
+import com.legenkiy.security.rest.CookieService;
+import com.legenkiy.security.rest.CookieService.TokenCookies;
+import com.legenkiy.security.rest.TokenFilter;
 import com.legenkiy.user.AuthResource;
 import com.legenkiy.user.AuthService;
 import com.legenkiy.user.dto.UserRegistrationCommand;

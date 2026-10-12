@@ -2,11 +2,14 @@ package com.legenkiy.impl;
 
 import com.legenkiy.AuctionEntityMapper;
 import com.legenkiy.AuctionService;
+import com.legenkiy.RoomService;
+import com.legenkiy.dto.AuctionCreatedRs;
 import com.legenkiy.dto.CreateAuctionCommand;
 import com.legenkiy.dto.UpdateAuctionCommand;
 import com.legenkiy.exception.NotFoundException;
 import com.legenkiy.model.Auction;
 import com.legenkiy.model.AuctionStatus;
+import com.legenkiy.model.Room;
 import com.legenkiy.repository.DefaultAuctionRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.transaction.Transactional;
@@ -23,13 +26,15 @@ public class DefaultAuctionService implements AuctionService {
 
     private final AuctionEntityMapper mapper;
     private final DefaultAuctionRepository repository;
+    private final RoomService roomService;
 
     @Override
     @Transactional
-    public Auction create(CreateAuctionCommand command) {
+    public AuctionCreatedRs create(CreateAuctionCommand command) {
         Auction auction = mapper.toCreate(command);
         repository.persist(mapper.toEntity(auction));
-        return auction;
+        Room createRoom = roomService.create(auction.getId());
+        return new AuctionCreatedRs(auction, createRoom);
     }
 
     @Override

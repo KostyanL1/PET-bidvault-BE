@@ -27,6 +27,12 @@ quarkus:
     bv-common:
       group-id: com.legenkiy
       artifact-id: bv-common
+    bv-auction:
+      group-id: com.legenkiy
+      artifact-id: bv-auction
+    bv-room:
+      group-id: com.legenkiy
+      artifact-id: bv-room
 
 smallrye:
   jwt:

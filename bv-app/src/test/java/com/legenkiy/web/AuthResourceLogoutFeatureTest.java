@@ -6,7 +6,7 @@ import com.legenkiy.AbstractIntegrationTest;
 import com.legenkiy.CommonGenerator;
 import com.legenkiy.jwt.JwtService;
 import com.legenkiy.jwt.model.AuthTokens;
-import com.legenkiy.security.CookieService;
+import com.legenkiy.security.rest.CookieService;
 import io.quarkus.test.InjectMock;
 import io.quarkus.test.junit.QuarkusTest;
 import io.quarkus.test.junit.mockito.InjectSpy;

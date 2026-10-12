@@ -1,0 +1,36 @@
+info:
+  name: Create
+  type: http
+  seq: 1
+
+http:
+  method: POST
+  url: "{{host}}/api/auction/create"
+  headers:
+    - name: Authorization
+      value: Bearer {{accessToken}}
+  body:
+    type: json
+    data: |-
+      {
+        "title": "Test auction",
+        "description": "test, test, test, test, test, test, test, test, test, test, test, test, test, test",
+        "startPrice": 10,
+        "duration": 900
+      }
+
+runtime:
+  scripts:
+    - type: after-response
+      code: |-
+        const body = res.getBody();
+
+        if (body.room?.id) {
+          bru.setEnvVar("roomId", body.room.id);
+        }
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
