@@ -13,9 +13,9 @@ http:
     type: json
     data: |-
       {
-        "title": "Test auction",
-        "description": "test, test, test, test, test, test, test, test, test, test, test, test, test, test",
-        "startPrice": 10,
+        "title": "Old guitar",
+        "description": "Vintage acoustic guitar with warm tone and worn wooden finish.",
+        "startPrice": 100,
         "duration": 900
       }
 
@@ -34,3 +34,4 @@ settings:
   timeout: 0
   followRedirects: true
   maxRedirects: 5
+  forwardAuthorizationHeader: true

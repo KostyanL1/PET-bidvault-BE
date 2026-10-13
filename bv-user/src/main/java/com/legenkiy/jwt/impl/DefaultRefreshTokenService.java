@@ -59,7 +59,7 @@ public class DefaultRefreshTokenService implements JwtService {
     }
 
     @Override
-    public String validateTokenAndGetUsername(String token) {
+    public JsonWebToken validateTokenAndGetTokenObject(String token) {
         try {
             if (token == null || token.isBlank()) {
                 log.info("Refresh token is missing");
@@ -75,7 +75,7 @@ public class DefaultRefreshTokenService implements JwtService {
                 throw new UnauthorizedException("Token revoked");
             }
 
-            return jwt.getName();
+            return jwt;
         } catch (Exception e) {
             throw new UnauthorizedException("Token validation failed: ", e.getCause());
         }
