@@ -13,6 +13,7 @@ import com.legenkiy.user.security.PasswordHasher;
 import jakarta.enterprise.context.ApplicationScoped;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.eclipse.microprofile.jwt.JsonWebToken;
 
 import java.util.Optional;
 
@@ -40,9 +41,9 @@ public class DefaultAuthService implements AuthService {
 
     @Override
     public AuthTokens refresh(String token)  {
-        String username = jwtService.validateTokenAndGetUsername(token);
+        JsonWebToken jsonWebToken = jwtService.validateTokenAndGetTokenObject(token);
 
-        User user = userService.getByUsername(username);
+        User user = userService.getByUsername(jsonWebToken.getName());
 
         jwtService.revoke(token);
         return jwtService.issueTokens(user.getUsername(), user.getId());

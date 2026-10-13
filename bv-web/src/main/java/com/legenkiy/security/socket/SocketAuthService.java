@@ -6,6 +6,7 @@ import io.quarkus.websockets.next.WebSocketConnection;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.context.control.ActivateRequestContext;
 import lombok.RequiredArgsConstructor;
+import org.eclipse.microprofile.jwt.JsonWebToken;
 
 import java.util.Arrays;
 
@@ -19,9 +20,9 @@ public class SocketAuthService {
     private final JwtService jwtService;
 
     @ActivateRequestContext
-    public String authenticate(WebSocketConnection connection) {
+    public JsonWebToken authenticate(WebSocketConnection connection) {
         String token = extractTokenFromCookie(connection, ACCESS_TOKEN_COOKIE);
-        return jwtService.validateTokenAndGetUsername(token);
+        return jwtService.validateTokenAndGetTokenObject(token);
     }
 
     private String extractTokenFromCookie(WebSocketConnection connection, String tokenName) {
