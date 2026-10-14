@@ -1,0 +1,6 @@
+bv_room:
+  - id: "b61f873a-02df-4f87-a94e-9f2c6b8f1d29"
+    auction_id: "7f3b9c21-4d8a-4f6e-9c12-83a7e5d0b4f2"
+    status: "CREATED"
+    created_at: "2026-10-14 12:00:00"
+    updated_at: "2026-10-14 12:00:00"

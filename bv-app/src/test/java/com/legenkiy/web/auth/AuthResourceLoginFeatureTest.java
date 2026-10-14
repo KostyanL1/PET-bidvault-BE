@@ -1,4 +1,4 @@
-package com.legenkiy.web;
+package com.legenkiy.web.auth;
 
 import com.github.database.rider.core.api.dataset.DataSet;
 import com.legenkiy.AbstractIntegrationTest;
@@ -15,10 +15,10 @@ import lombok.SneakyThrows;
 
 import static com.legenkiy.AbstractIntegrationTest.Fixtures.FIRST_USER_ID;
 import static com.legenkiy.AbstractIntegrationTest.Fixtures.FIRST_USER_USERNAME;
-import static com.legenkiy.web.AuthResourceLoginFeatureTest.Fixtures.BASE_API;
-import static com.legenkiy.web.AuthResourceLoginFeatureTest.Fixtures.MALFORMED_LOGIN_DATA_PATH;
-import static com.legenkiy.web.AuthResourceLoginFeatureTest.Fixtures.INCORRECT_LOGIN_DATA_PATH;
-import static com.legenkiy.web.AuthResourceLoginFeatureTest.Fixtures.INCORRECT_PASSWORD_PATH;
+import static com.legenkiy.web.auth.AuthResourceLoginFeatureTest.Fixtures.BASE_API;
+import static com.legenkiy.web.auth.AuthResourceLoginFeatureTest.Fixtures.MALFORMED_LOGIN_DATA_PATH;
+import static com.legenkiy.web.auth.AuthResourceLoginFeatureTest.Fixtures.INCORRECT_LOGIN_DATA_PATH;
+import static com.legenkiy.web.auth.AuthResourceLoginFeatureTest.Fixtures.INCORRECT_PASSWORD_PATH;
 import static io.restassured.RestAssured.given;
 
 import static org.mockito.Mockito.when;

@@ -1,4 +1,4 @@
-package com.legenkiy.web;
+package com.legenkiy.web.auth;
 
 import com.github.database.rider.core.api.dataset.DataSet;
 import com.github.database.rider.core.api.dataset.ExpectedDataSet;
