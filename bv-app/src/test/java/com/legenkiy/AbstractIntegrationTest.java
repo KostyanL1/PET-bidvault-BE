@@ -4,7 +4,11 @@ import com.github.database.rider.core.api.connection.ConnectionHolder;
 import com.github.database.rider.core.api.configuration.DBUnit;
 import com.github.database.rider.core.api.configuration.Orthography;
 import com.github.database.rider.junit5.DBUnitExtension;
+import com.legenkiy.jwt.JwtService;
+import com.legenkiy.jwt.model.AuthTokens;
+import io.quarkus.test.InjectMock;
 import io.quarkus.test.common.QuarkusTestResource;
+import io.restassured.http.Header;
 import jakarta.inject.Inject;
 import org.junit.jupiter.api.extension.ExtendWith;
 
@@ -17,6 +21,8 @@ import java.time.Instant;
 import java.util.Objects;
 import java.util.UUID;
 
+import static org.mockito.Mockito.when;
+
 @ExtendWith(DBUnitExtension.class)
 @QuarkusTestResource(TestContainerResource.class)
 @DBUnit(caseInsensitiveStrategy = Orthography.LOWERCASE)
@@ -24,6 +30,10 @@ public abstract class AbstractIntegrationTest {
 
     @Inject
     DataSource dataSource;
+    @Inject
+    JwtService service;
+    @InjectMock
+    CommonGenerator generator;
 
     ConnectionHolder connectionHolder = () -> dataSource.getConnection();
 
@@ -34,6 +44,12 @@ public abstract class AbstractIntegrationTest {
         } catch (IOException | URISyntaxException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public Header issueTokensAndGetHeader() {
+        when(generator.now()).thenReturn(Instant.now());
+        AuthTokens tokens = service.issueTokens(Fixtures.FIRST_USER_USERNAME, Fixtures.FIRST_USER_ID);
+        return new Header("Authorization", "Bearer "+ tokens.accessToken());
     }
 
     public static class Fixtures {

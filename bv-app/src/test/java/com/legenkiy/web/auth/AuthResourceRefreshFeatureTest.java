@@ -1,4 +1,4 @@
-package com.legenkiy.web;
+package com.legenkiy.web.auth;
 
 import com.github.database.rider.core.api.dataset.DataSet;
 import com.github.database.rider.core.api.dataset.ExpectedDataSet;
@@ -22,9 +22,9 @@ import static com.legenkiy.AbstractIntegrationTest.Fixtures.SECOND_TOKEN_JTI;
 import static com.legenkiy.AbstractIntegrationTest.Fixtures.FIRST_USER_USERNAME;
 import static com.legenkiy.AbstractIntegrationTest.Fixtures.FIRST_USER_ID;
 
-import static com.legenkiy.web.AuthResourceRefreshFeatureTest.Fixtures.BASE_REFRESH_API;
-import static com.legenkiy.web.AuthResourceRefreshFeatureTest.Fixtures.CORRECT_LOGIN_DATA;
-import static com.legenkiy.web.AuthResourceRefreshFeatureTest.Fixtures.BASE_LOGIN_API;
+import static com.legenkiy.web.auth.AuthResourceRefreshFeatureTest.Fixtures.BASE_REFRESH_API;
+import static com.legenkiy.web.auth.AuthResourceRefreshFeatureTest.Fixtures.CORRECT_LOGIN_DATA;
+import static com.legenkiy.web.auth.AuthResourceRefreshFeatureTest.Fixtures.BASE_LOGIN_API;
 import static io.restassured.RestAssured.given;
 import static org.mockito.Mockito.when;
 
