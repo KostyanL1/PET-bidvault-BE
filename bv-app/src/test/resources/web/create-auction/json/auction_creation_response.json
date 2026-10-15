@@ -1,0 +1,21 @@
+{
+  "auction": {
+    "id": "7f3b9c21-4d8a-4f6e-9c12-83a7e5d0b4f2",
+    "title": "Old guitar",
+    "description": "Vintage acoustic guitar with warm tone and worn wooden finish.",
+    "status": "CREATED",
+    "createdAt": "2026-10-14T12:00:00Z",
+    "updatedAt": "2026-10-14T12:00:00Z",
+    "startPrice": 100,
+    "duration": 900,
+    "ownerId": "11111111-1111-1111-1111-111111111111",
+    "countOfParticipants": 0
+  },
+  "room": {
+    "id": "b61f873a-02df-4f87-a94e-9f2c6b8f1d29",
+    "auctionId": "7f3b9c21-4d8a-4f6e-9c12-83a7e5d0b4f2",
+    "status": "CREATED",
+    "createdAt": "2026-10-14T12:00:00Z",
+    "updatedAt": "2026-10-14T12:00:00Z"
+  }
+}
