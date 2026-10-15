@@ -48,6 +48,7 @@ public abstract class AbstractIntegrationTest {
 
     public Header issueTokensAndGetHeader() {
         when(generator.now()).thenReturn(Instant.now());
+        when(generator.uuid()).thenReturn(Fixtures.FIRST_TOKEN_JTI);
         AuthTokens tokens = service.issueTokens(Fixtures.FIRST_USER_USERNAME, Fixtures.FIRST_USER_ID);
         return new Header("Authorization", "Bearer "+ tokens.accessToken());
     }
