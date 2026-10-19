@@ -1,7 +1,6 @@
 package com.legenkiy.user.impl;
 
 import com.legenkiy.WalletService;
-import com.legenkiy.model.Wallet;
 import com.legenkiy.user.UserService;
 import com.legenkiy.user.dto.UserRegistrationCommand;
 import com.legenkiy.exception.NotFoundException;
