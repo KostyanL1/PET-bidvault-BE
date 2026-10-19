@@ -8,6 +8,7 @@ import com.legenkiy.dto.CreateAuctionCommand;
 import com.legenkiy.dto.UpdateAuctionCommand;
 import com.legenkiy.exception.NotFoundException;
 import com.legenkiy.model.Auction;
+import com.legenkiy.model.AuctionEntity;
 import com.legenkiy.model.AuctionStatus;
 import com.legenkiy.model.Room;
 import com.legenkiy.repository.DefaultAuctionRepository;
@@ -40,10 +41,10 @@ public class DefaultAuctionService implements AuctionService {
     @Override
     @Transactional
     public Auction markAuctionWithStatus(UUID auctionId, AuctionStatus status) {
-        Auction auction = getById(auctionId);
-        mapper.markWithStatus(auction, status);
-        repository.persist(mapper.toEntity(auction));
-        return auction;
+        AuctionEntity entity = repository.findByIdOptional(auctionId).orElseThrow(()
+                -> new NotFoundException("Auction not found: auctionId=%s".formatted(auctionId)));
+        mapper.markWithStatus(entity, status);
+        return mapper.toDto(entity);
     }
 
     @Override

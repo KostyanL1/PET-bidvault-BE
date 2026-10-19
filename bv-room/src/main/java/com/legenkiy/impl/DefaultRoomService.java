@@ -33,7 +33,8 @@ public class DefaultRoomService implements RoomService {
     @Override
     @Transactional
     public Room markRoomWithStatus(UUID roomId, RoomStatus status) {
-        RoomEntity entity = mapper.toEntity(getById(roomId));
+        RoomEntity entity = repository.findByIdOptional(roomId).orElseThrow(
+                () -> new NotFoundException("Room not found: roomId=%s".formatted(roomId)));
         mapper.markWithStatus(entity, status);
         return mapper.toDto(entity);
     }

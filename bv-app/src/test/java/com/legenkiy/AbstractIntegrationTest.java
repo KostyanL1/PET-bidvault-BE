@@ -25,7 +25,7 @@ import static org.mockito.Mockito.when;
 
 @ExtendWith(DBUnitExtension.class)
 @QuarkusTestResource(TestContainerResource.class)
-@DBUnit(caseInsensitiveStrategy = Orthography.LOWERCASE)
+@DBUnit(caseInsensitiveStrategy = Orthography.LOWERCASE, alwaysCleanAfter = true)
 public abstract class AbstractIntegrationTest {
 
     @Inject
