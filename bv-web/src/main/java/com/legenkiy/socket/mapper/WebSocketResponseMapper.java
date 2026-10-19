@@ -1,6 +1,8 @@
 package com.legenkiy.socket.mapper;
 
 import com.legenkiy.CommonGenerator;
+import com.legenkiy.event.BidPlacedEvent;
+import com.legenkiy.socket.model.BidSettleEventModel;
 import com.legenkiy.socket.model.EventType;
 import com.legenkiy.socket.model.UserJoinedEventModel;
 import jakarta.enterprise.context.ApplicationScoped;
@@ -20,6 +22,15 @@ public class WebSocketResponseMapper {
                 .userId(userId)
                 .joinedAt(generator.now())
                 .type(EventType.USER_JOINED)
+                .build();
+    }
+
+    public BidSettleEventModel toBidSettleEvent(BidPlacedEvent bid) {
+        return BidSettleEventModel.builder()
+                .roomId(bid.roomId())
+                .userId(bid.userId())
+                .amount(bid.amount())
+                .type(EventType.SETTLED_BID)
                 .build();
     }
 

@@ -29,6 +29,7 @@ dependencies {
     implementation 'io.quarkus:quarkus-scheduler'
 
     testImplementation 'io.quarkus:quarkus-junit5'
+    testImplementation project(':bv-wallet')
     testImplementation 'io.rest-assured:rest-assured'
 
     testImplementation 'io.quarkus:quarkus-junit5-mockito'

@@ -1,0 +1,31 @@
+info:
+  name: TopUp
+  type: http
+  seq: 1
+
+http:
+  method: POST
+  url: "{{lhost}}/api/wallet/top-ups"
+  headers:
+    - name: Authorization
+      value: Bearer {{accessToken}}
+  body:
+    type: json
+    data: |-
+      {
+        "userId": "e5ee40cc-633a-4dfe-88fa-b4a0a59ef240",
+        "amount": 100
+      }
+  auth: inherit
+
+runtime:
+  variables:
+    - name: lhost
+      value: "{{host}}"
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: false
