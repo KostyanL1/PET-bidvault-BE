@@ -1,5 +1,7 @@
 package com.legenkiy.user.impl;
 
+import com.legenkiy.WalletService;
+import com.legenkiy.model.Wallet;
 import com.legenkiy.user.UserService;
 import com.legenkiy.user.dto.UserRegistrationCommand;
 import com.legenkiy.exception.NotFoundException;
@@ -21,12 +23,14 @@ public class DefaultIUserService implements UserService {
 
     private final DefaultUserRepository repository;
     private final UserEntityMapper mapper;
+    private final WalletService walletService;
 
     @Override
     @Transactional
     public User create(UserRegistrationCommand command) {
         UserEntity userEntity = mapper.toCreate(command);
         repository.persist(userEntity);
+        walletService.create(userEntity.getId());
         return mapper.toDto(userEntity);
     }
 

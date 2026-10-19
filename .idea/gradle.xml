@@ -13,6 +13,7 @@
             <option value="$PROJECT_DIR$/bv-common" />
             <option value="$PROJECT_DIR$/bv-room" />
             <option value="$PROJECT_DIR$/bv-user" />
+            <option value="$PROJECT_DIR$/bv-wallet" />
             <option value="$PROJECT_DIR$/bv-web" />
           </set>
         </option>

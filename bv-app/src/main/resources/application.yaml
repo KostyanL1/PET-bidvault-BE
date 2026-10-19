@@ -33,6 +33,9 @@ quarkus:
     bv-room:
       group-id: com.legenkiy
       artifact-id: bv-room
+    bv-wallet:
+      group-id: com.legenkiy
+      artifact-id: bv-wallet
 
 smallrye:
   jwt:
