@@ -11,12 +11,15 @@ import io.restassured.http.ContentType;
 import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.Test;
 
+import java.util.UUID;
+
 import static com.legenkiy.AbstractIntegrationTest.Fixtures.FIRST_USER_ID;
 import static com.legenkiy.AbstractIntegrationTest.Fixtures.FIRST_USER_CREATED_AT;
 import static com.legenkiy.AbstractIntegrationTest.Fixtures.FIRST_USER_PASSWORD;
 import static com.legenkiy.AbstractIntegrationTest.Fixtures.FIRST_USER_PASSWORD_HASH;
 import static com.legenkiy.web.auth.AuthResourceRegisterFeatureTest.Fixtures.BASE_API_PATH;
 import static com.legenkiy.web.auth.AuthResourceRegisterFeatureTest.Fixtures.CORRECT_USER_DATA_PATH;
+import static com.legenkiy.web.auth.AuthResourceRegisterFeatureTest.Fixtures.FIRST_USER_WALLET_ID;
 import static io.restassured.RestAssured.given;
 import static org.mockito.Mockito.when;
 
@@ -30,9 +33,15 @@ public class AuthResourceRegisterFeatureTest extends AbstractIntegrationTest {
     PasswordHasher passwordHasher;
 
     @Test
-    @DataSet("web/register/given/empty_user_table.yml")
-    @ExpectedDataSet("web/register/then/users_table_with_first_user.yml")
-    void givenCorrectData_register_shouldCreateUser() {
+    @DataSet(value = {
+            "web/register/given/empty_user_table.yml",
+            "web/register/given/empty_wallet_table.yml"
+    })
+    @ExpectedDataSet(value = {
+            "web/register/then/users_table_with_first_user.yml",
+            "web/register/then/wallet_table_with_first_user.yml"
+    })
+    void givenCorrectData_register_shouldCreateUserAndHisBalance() {
         mockRegisterDependencies();
 
         given()
@@ -72,7 +81,7 @@ public class AuthResourceRegisterFeatureTest extends AbstractIntegrationTest {
     }
 
     private void mockRegisterDependencies() {
-        when(commonGenerator.uuid()).thenReturn(FIRST_USER_ID);
+        when(commonGenerator.uuid()).thenReturn(FIRST_USER_ID).thenReturn(FIRST_USER_WALLET_ID);
         when(commonGenerator.now()).thenReturn(FIRST_USER_CREATED_AT);
         when(passwordHasher.hash(FIRST_USER_PASSWORD)).thenReturn(FIRST_USER_PASSWORD_HASH);
     }
@@ -82,6 +91,8 @@ public class AuthResourceRegisterFeatureTest extends AbstractIntegrationTest {
 
         static String CORRECT_USER_DATA_PATH = "web/register/json/correct_user_data_for_registration.json";
         static String INCORRECT_USER_DATA_PATH = "web/register/json/incorrect_user_data_for_registration.json";
+
+        static UUID FIRST_USER_WALLET_ID = UUID.fromString("7e2c91a4-8b6d-4f03-a259-dc8071e6b435");
     }
 
 }

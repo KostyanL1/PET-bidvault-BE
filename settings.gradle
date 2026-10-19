@@ -6,3 +6,4 @@ include 'bv-common'
 
 include 'bv-auction'
 include 'bv-room'
+include 'bv-wallet'
