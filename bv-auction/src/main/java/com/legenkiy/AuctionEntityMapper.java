@@ -68,16 +68,15 @@ public class AuctionEntityMapper {
                 .build();
     }
 
-    public void markWithStatus(Auction auction, AuctionStatus status) {
+    public void markWithStatus(AuctionEntity auction, AuctionStatus status) {
         Instant time = commonGenerator.now();
         if (status.equals(AuctionStatus.FINISHED)) {
             auction.setFinishedAt(time);
         }
         if (status.equals(AuctionStatus.STARTED)) {
             auction.setStartedAt(time);
-        } else {
-            throw new IllegalArgumentException("Unsupported status: status=%s".formatted(status));
         }
+        auction.setStatus(status);
         auction.setUpdatedAt(time);
     }
 
