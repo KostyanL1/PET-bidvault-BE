@@ -3,7 +3,7 @@ package com.legenkiy.socket;
 import com.legenkiy.socket.mapper.WebSocketResponseMapper;
 import com.legenkiy.socket.model.BaseEventModel;
 import com.legenkiy.security.socket.SocketAuthService;
-import com.legenkiy.user.utils.ResourcesUtils;
+import com.legenkiy.rest.user.utils.ResourcesUtils;
 import io.quarkus.websockets.next.OnOpen;
 import io.quarkus.websockets.next.WebSocket;
 import io.quarkus.websockets.next.WebSocketConnection;
@@ -14,16 +14,17 @@ import java.util.UUID;
 
 @Slf4j
 @RequiredArgsConstructor
-@WebSocket(path = "/auction/{roomId}")
+@WebSocket(path = "/auction/{roomId}", endpointId = AuctionWebSocket.ENDPOINT_ID)
 public class AuctionWebSocket {
 
-    private final WebSocketConnection connection;
+    public static final String ENDPOINT_ID = "auction-room";
+
     private final SocketAuthService socketAuthService;
     private final ConnectionManager connectionManager;
     private final WebSocketResponseMapper mapper;
 
     @OnOpen
-    public BaseEventModel onOpen() {
+    public BaseEventModel onOpen(WebSocketConnection connection) {
         UUID roomId = UUID.fromString(connection.pathParam("roomId"));
         log.info("User trying connected to room: roomId={}", roomId);
 

@@ -24,6 +24,15 @@ public class WalletEntityMapper {
                 .build();
     }
 
+    public Wallet increaseBalance(WalletEntity wallet, double amount) {
+        double balance = wallet.getBalance();
+        balance += amount;
+        wallet.setBalance(balance);
+        wallet.setUpdatedAt(generator.now());
+        wallet.setVersion(wallet.getVersion() + 1);
+        return toDto(wallet);
+    }
+
     public Wallet toDto(WalletEntity entity) {
         return Wallet.builder()
                 .id(entity.getId())
