@@ -40,6 +40,11 @@ public class DefaultRoomService implements RoomService {
     }
 
     @Override
+    public UUID getAuctionIdByRoomId(UUID roomId) {
+        return repository.getAuctionIdByRoomId(roomId);
+    }
+
+    @Override
     public Room getById(UUID roomId) {
         return findById(roomId).orElseThrow(
                 () -> new NotFoundException("Room not found: roomId=%s".formatted(roomId)));

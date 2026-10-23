@@ -43,6 +43,7 @@ public class DefaultAuthResource implements AuthResource {
     private final AuthService authService;
     private final UserMapper mapper;
     private final CookieService cookieService;
+    private final UserRegistrationService registrationService;
 
     @Override
     @POST
@@ -53,7 +54,7 @@ public class DefaultAuthResource implements AuthResource {
         validate(rq.username());
 
         UserRegistrationCommand command = mapper.toUserRegistration(rq);
-        User registered = authService.register(command);
+        User registered = registrationService.register(command);
 
         log.debug("User registered: id={}, username={}", registered.getId(), registered.getUsername());
         return Response.ok().build();
