@@ -12,6 +12,8 @@ public interface RoomService {
 
     Room markRoomWithStatus(UUID roomId, RoomStatus status);
 
+    UUID getAuctionIdByRoomId(UUID roomId);
+
     Room getById(UUID roomId);
 
     Optional<Room> findById(UUID roomId);

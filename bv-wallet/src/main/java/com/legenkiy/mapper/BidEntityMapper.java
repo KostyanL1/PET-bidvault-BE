@@ -53,4 +53,9 @@ public class BidEntityMapper {
                 .build();
     }
 
+    public void setStatus(Bid bid, BidStatus status) {
+        bid.setStatus(status);
+        bid.setUpdatedAt(generator.now());
+    }
+
 }

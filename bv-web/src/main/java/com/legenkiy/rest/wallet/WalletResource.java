@@ -14,6 +14,4 @@ public interface WalletResource extends BaseApi {
 
     Response getWalletForCurrentUser();
 
-
-
 }

@@ -1,6 +1,5 @@
 package com.legenkiy.user.impl;
 
-import com.legenkiy.WalletService;
 import com.legenkiy.user.UserService;
 import com.legenkiy.user.dto.UserRegistrationCommand;
 import com.legenkiy.exception.NotFoundException;
@@ -14,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.Optional;
+import java.util.UUID;
 
 @Slf4j
 @ApplicationScoped
@@ -22,20 +22,23 @@ public class DefaultIUserService implements UserService {
 
     private final DefaultUserRepository repository;
     private final UserEntityMapper mapper;
-    private final WalletService walletService;
 
     @Override
     @Transactional
     public User create(UserRegistrationCommand command) {
         UserEntity userEntity = mapper.toCreate(command);
         repository.persist(userEntity);
-        walletService.create(userEntity.getId());
         return mapper.toDto(userEntity);
     }
 
     @Override
     public Optional<User> findByEmail(String email) {
         return repository.findByEmail(email).map(mapper::toDto);
+    }
+
+    @Override
+    public Optional<User> findById(UUID id) {
+        return repository.findByIdOptional(id).map(mapper::toDto);
     }
 
     @Override
