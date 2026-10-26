@@ -1,4 +1,4 @@
-package com.legenkiy.rest.user.exception.mapper;
+package com.legenkiy.rest.exception.mapper;
 
 import com.legenkiy.exception.NotFoundException;
 import jakarta.ws.rs.core.Response;

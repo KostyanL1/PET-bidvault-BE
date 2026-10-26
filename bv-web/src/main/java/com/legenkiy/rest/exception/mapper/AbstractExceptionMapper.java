@@ -1,6 +1,6 @@
-package com.legenkiy.rest.user.exception.mapper;
+package com.legenkiy.rest.exception.mapper;
 
-import com.legenkiy.rest.user.exception.model.ErrorDto;
+import com.legenkiy.rest.exception.model.ErrorDto;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.ext.ExceptionMapper;
 import lombok.extern.slf4j.Slf4j;

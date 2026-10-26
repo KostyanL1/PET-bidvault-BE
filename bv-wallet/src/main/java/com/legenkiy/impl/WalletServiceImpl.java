@@ -23,6 +23,7 @@ public class WalletServiceImpl implements WalletService {
     private final DefaultWalletRepository repository;
 
     @Override
+    @Transactional
     public Wallet create(UUID userId) {
         Wallet wallet = mapper.toCreate(userId);
         repository.persist(mapper.toEntity(wallet));

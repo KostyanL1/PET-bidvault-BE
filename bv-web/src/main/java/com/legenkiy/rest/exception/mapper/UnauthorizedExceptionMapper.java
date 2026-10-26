@@ -1,4 +1,4 @@
-package com.legenkiy.rest.user.exception.mapper;
+package com.legenkiy.rest.exception.mapper;
 
 import io.quarkus.security.UnauthorizedException;
 import jakarta.ws.rs.core.Response;

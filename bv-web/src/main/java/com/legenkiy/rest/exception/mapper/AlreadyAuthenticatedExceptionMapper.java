@@ -1,6 +1,6 @@
-package com.legenkiy.rest.user.exception.mapper;
+package com.legenkiy.rest.exception.mapper;
 
-import com.legenkiy.rest.user.exception.AlreadyAuthenticated;
+import com.legenkiy.rest.exception.AlreadyAuthenticated;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.ext.Provider;
 
