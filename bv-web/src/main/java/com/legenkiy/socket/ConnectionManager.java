@@ -12,6 +12,7 @@ import java.util.Collections;
 import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
+import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 
 @ApplicationScoped
@@ -71,6 +72,14 @@ public class ConnectionManager {
         connections.forEach(roomConnection ->
                 roomConnection.connection().closeAndAwait()
         );
+    }
+
+    public boolean isConnectionExist(UUID roomId, UUID userId) {
+        Set<RoomConnection> connectionsByRoom = connectionsHolder.get(roomId);
+        Optional<RoomConnection> roomConnection = connectionsByRoom.stream()
+                .filter(rc -> userId.equals(rc.userId()))
+                .findFirst();
+        return roomConnection.isPresent();
     }
 
     private RoomConnection put(UUID key, RoomConnection connection) {

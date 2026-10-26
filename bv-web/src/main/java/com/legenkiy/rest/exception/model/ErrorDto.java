@@ -1,4 +1,4 @@
-package com.legenkiy.rest.user.exception.model;
+package com.legenkiy.rest.exception.model;
 
 public record ErrorDto(
         int code,

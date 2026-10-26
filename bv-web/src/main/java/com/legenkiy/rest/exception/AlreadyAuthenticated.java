@@ -1,4 +1,4 @@
-package com.legenkiy.rest.user.exception;
+package com.legenkiy.rest.exception;
 
 public class AlreadyAuthenticated extends RuntimeException {
     public AlreadyAuthenticated(String message) {

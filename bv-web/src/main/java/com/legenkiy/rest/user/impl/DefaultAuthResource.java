@@ -9,7 +9,7 @@ import com.legenkiy.user.AuthService;
 import com.legenkiy.user.dto.UserRegistrationCommand;
 import com.legenkiy.user.dto.UserLoginCommand;
 import com.legenkiy.user.model.User;
-import com.legenkiy.rest.user.exception.AlreadyAuthenticated;
+import com.legenkiy.rest.exception.AlreadyAuthenticated;
 import com.legenkiy.rest.user.mapper.UserMapper;
 import com.legenkiy.rest.user.model.auth.LoginRq;
 import com.legenkiy.rest.user.model.auth.RegistrationRq;
