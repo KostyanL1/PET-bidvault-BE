@@ -1,0 +1,11 @@
+bv_auction:
+  - id: "7f3b9c21-4d8a-4f6e-9c12-83a7e5d0b4f2"
+    title: "Old guitar"
+    description: "Vintage acoustic guitar with warm tone and worn wooden finish."
+    status: "CREATED"
+    start_price: 100
+    owner_id: "11111111-1111-1111-1111-111111111111"
+    created_at: "2026-10-14 12:00:00"
+    updated_at: "2026-10-14 12:00:00"
+    duration: 900
+    count_of_participants: 0
