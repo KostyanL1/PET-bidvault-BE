@@ -1,0 +1,41 @@
+name: build.yml
+on:
+  pull_request:
+    branches: [ master ]
+  push:
+    branches: [ master ]
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: prepare tokens for testing
+        run: |
+          key_dir=bv-app/src/main/resources/jwt
+          tmp_dir=$(mktemp -d)
+          trap 'rm -rf "$tmp_dir"' EXIT
+          
+          mkdir -p "$key_dir"
+          umask 077
+          ssh-keygen -q -t rsa -b 2048 -m PEM -N '' -f "$tmp_dir/jwt"
+          openssl pkcs8 -topk8 -nocrypt -in "$tmp_dir/jwt" \
+            -out "$key_dir/privateKey.pem"
+          ssh-keygen -e -m PKCS8 -f "$tmp_dir/jwt.pub" \
+            > "$key_dir/publicKey.pem"
+      - name: run checkstyle
+        run: bash ./gradlew checkstyleMain checkstyleTest
+      - name: run tests
+        run: bash ./gradlew :bv-app:test
+      - name: run build
+        run: bash ./gradlew :bv-app:build -x :bv-app:test
+      - name: remove tokens for testing
+        if: ${{ always() }}
+        run: |
+          rm -f -- bv-app/src/main/resources/jwt/privateKey.pem \
+            bv-app/src/main/resources/jwt/publicKey.pem
