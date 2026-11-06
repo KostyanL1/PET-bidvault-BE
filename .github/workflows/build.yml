@@ -31,7 +31,7 @@ jobs:
       - name: run checkstyle
         run: bash ./gradlew checkstyleMain checkstyleTest
       - name: run tests
-        run: bash ./gradlew :bv-app:quarkusTest
+        run: bash ./gradlew :bv-app:test
       - name: run build
         run: bash ./gradlew :bv-app:build -x :bv-app:test
       - name: remove tokens for testing
