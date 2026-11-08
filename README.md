@@ -33,6 +33,14 @@ bv-common   Shared utilities and exceptions
 bruno       API request collection
 ```
 
+## Roadmap
+
+**Bidding:** validate auction status, timing, and minimum bid increments; handle concurrent bids and release reservations when a bid is outbid.
+
+**Settlement:** close expired auctions, determine winners, charge winning wallets, and release remaining reservations through domain events.
+
+**Verification:** cover the full auction lifecycle, competing bids, and WebSocket bid notifications with integration tests.
+
 ## Development
 
 Requires JDK 21 and Docker. Configure `BV_POSTGRES_DB`, `BV_POSTGRES_USERNAME`, `BV_POSTGRES_PASSWORD`, `BV_POSTGRES_URL`, `JWT_ACCESS_EXPIRED`, and `JWT_REFRESH_EXPIRED` in your environment. Docker Compose reads database variables from `.env`; the application needs its variables exported separately.
